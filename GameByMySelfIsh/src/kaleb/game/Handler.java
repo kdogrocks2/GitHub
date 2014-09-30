@@ -1,0 +1,146 @@
+package kaleb.game;
+
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.LinkedList;
+
+import kaleb.game.entity.GameObject;
+import kaleb.game.entity.ID;
+import kaleb.game.entity.Player;
+
+public class Handler {
+
+	Player player;
+	Game game;
+	Rectangle tempBoundsPlayer;
+	Rectangle tempBoundsBullet;
+	Rectangle tempBoundsBullet2;
+	Point clickLocation;
+	public int oneTick = 0;
+
+	// should contain all objects in the game
+	LinkedList<GameObject> object = new LinkedList<GameObject>();
+
+	// goes through each object and ticks them
+	public void tick() {
+		for (int i = 0; i < object.size(); i++) {
+
+			GameObject tempObject = object.get(i);
+			// q just makes sure the first time handler is called it doesn't run
+			// this because you get a null pointer
+			// This is a sloppy thing to do but i cant fix it so wtf i dont
+			// care!
+
+			if (oneTick == 1) {
+				// This saves the players bounding box to a temporary variable
+				// every tick for use later
+				// I tried to do this with the enemies but i would have had to
+				// create a tempBounds variable
+				// for each one so this is better to do
+				// THIS WILL FALL APART IF WE HAVE MULTIPLE PLAYERS!!!!
+				if (tempObject.getId() == ID.Player) {
+					tempBoundsPlayer = tempObject.getBounds();
+				}
+
+				if (tempObject.getId() == ID.Bullet) {
+					// removes the bullet if it goes off the screen
+					if (tempObject.getBounds().x > 640) {
+						removeObject(tempObject);
+					}
+					if (tempObject.getBounds().y > 480) {
+						removeObject(tempObject);
+					}
+					tempBoundsBullet = tempObject.getBounds();
+				}
+
+				// Checks if bullets are intersecting enemies, if they are they
+				// remove the enemy.
+				if (tempBoundsBullet != null)
+					if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.Enemy2 || tempObject.getId() == ID.Enemy3 || tempObject.getId() == ID.Enemy4 || tempObject.getId() == ID.Enemy5) {
+
+						if (tempObject.getBounds().intersects(tempBoundsBullet)) {
+							System.out.println("LOLOL");
+							removeObject(tempObject);
+
+						}
+					}
+			}
+
+			// removes latEnemies if they are off the screen, but only on
+			// the opposite side of
+			// their spawn point
+			// That way we can spawn them off the screen
+
+			if (tempObject.getId() == ID.LatEnemyRL) {
+				if (tempObject.getX() < 0) {
+					removeObject(tempObject);
+				}
+			}
+			if (tempObject.getId() == ID.LatEnemyLR) {
+				if (tempObject.getX() > 640) {
+					removeObject(tempObject);
+				}
+			}
+
+			// Checks if the Enemy's bounding box intersects the temp
+			// bounding box we made earlier
+			// runs every tick
+			if (tempBoundsPlayer != null)
+				if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.Enemy2 || tempObject.getId() == ID.LatEnemyRL || tempObject.getId() == ID.LatEnemyLR) {
+					if (tempObject.getBounds().intersects(tempBoundsPlayer)) {
+						// game.setGameState(1);
+						// System.exit(1);
+					}
+				}
+
+			if (oneTick == 0)
+				oneTick++;
+			tempObject.tick();
+		}
+	}
+
+	// goes through each object and renders them
+	public void render(Graphics g) {
+		for (int i = 0; i < object.size(); i++) {
+			GameObject tempObject = object.get(i);
+
+			tempObject.render(g);
+		}
+	}
+
+	public void addObject(GameObject object) {
+		this.object.add(object);
+
+	}
+
+	public void removeObject(GameObject object) {
+		this.object.remove(object);
+	}
+
+	// Returns the players bounding box
+	// We can use this for collision
+	// make sure this doesn't get called before oneTick > 0 or else you will get
+	// a null pointer
+	public Rectangle getTempBoundsPlayer() {
+		return tempBoundsPlayer;
+	}
+
+	public Rectangle getTempBoundsBullet() {
+		return tempBoundsBullet;
+	}
+
+	public Point getClickLocation() {
+		return clickLocation;
+	}
+
+	// Just a failsafe so handler never calls anything that is null
+	// Just made it public so i don't have to make a oneTick everytime i have a
+	// null pointer
+	// use this if you are getting null pointers because of handler calling
+	// things that aren't made yet
+	public int getOneTick() {
+		return oneTick;
+	}
+
+}
