@@ -52,19 +52,31 @@ public class Handler {
 						removeObject(tempObject);
 					}
 					tempBoundsBullet = tempObject.getBounds();
+					for(int q = 0; q < object.size(); q++){
+						GameObject tempEnemy  = object.get(q);
+						if (tempEnemy.getId() == ID.Enemy || tempEnemy.getId() == ID.Enemy2 || tempEnemy.getId() == ID.Enemy3 || tempEnemy.getId() == ID.Enemy4 || tempEnemy.getId() == ID.Enemy5) {
+							
+							if (tempEnemy.getBounds().intersects(tempBoundsBullet)) {
+								System.out.println("LOLOL");
+								removeObject(tempEnemy);
+
+							}
+						}
+					}
+					
 				}
 
 				// Checks if bullets are intersecting enemies, if they are they
 				// remove the enemy.
-				if (tempBoundsBullet != null)
-					if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.Enemy2 || tempObject.getId() == ID.Enemy3 || tempObject.getId() == ID.Enemy4 || tempObject.getId() == ID.Enemy5) {
-
-						if (tempObject.getBounds().intersects(tempBoundsBullet)) {
-							System.out.println("LOLOL");
-							removeObject(tempObject);
-
-						}
-					}
+//				if (tempBoundsBullet != null)
+//					if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.Enemy2 || tempObject.getId() == ID.Enemy3 || tempObject.getId() == ID.Enemy4 || tempObject.getId() == ID.Enemy5) {
+//
+//						if (tempObject.getBounds().intersects(tempBoundsBullet)) {
+//							System.out.println("LOLOL");
+//							removeObject(tempObject);
+//
+//						}
+//					}
 			}
 
 			// removes latEnemies if they are off the screen, but only on

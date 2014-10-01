@@ -24,7 +24,6 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private Thread thread;
 	private Handler handler;
-	// private Mouse mouse;
 	private int timeSurvived = 0;
 	public String timeDisplay;
 	private Rectangle startButton;
@@ -121,19 +120,19 @@ public class Game extends Canvas implements Runnable {
 			if ((timeSurvived / 60) % 10 == 0) {
 				if ((timeSurvived / 60) == 10 && (enemyNum / 60) == 1) {
 					enemyNum++;
-					handler.addObject(new Enemy(20, 20, ID.Enemy3));
+					handler.addObject(new Enemy(20, 20, ID.Enemy));
 				}
 				if ((timeSurvived / 60) == 20 && (enemyNum / 60) == 2) {
-					handler.addObject(new Enemy(20, 20, ID.Enemy3));
+					handler.addObject(new Enemy(20, 20, ID.Enemy));
 				}
 				if ((timeSurvived / 60) == 30 && (enemyNum / 60) == 3) {
-					handler.addObject(new Enemy(20, 20, ID.Enemy3));
+					handler.addObject(new Enemy(20, 20, ID.Enemy));
 				}
 				enemyNum++;
 			}
 			// every 3 seconds it roles a dice (represented by chance)
 			// if chance == 81 it calls latAttack()
-			if ((timeSurvived / 60) % 3 == 0 && timeSurvived/60 != 0) {
+			if ((timeSurvived / 60) % 3 == 0 && timeSurvived / 60 != 0) {
 				chance = rand.nextInt(100);
 				if (chance != 0) {
 					if (chance == 81) {
@@ -149,7 +148,6 @@ public class Game extends Canvas implements Runnable {
 				handler.clickLocation = new Point(10000, 0);
 				startButton = new Rectangle(20000, 0);
 				setGameState(2);
-
 
 			}
 		}
