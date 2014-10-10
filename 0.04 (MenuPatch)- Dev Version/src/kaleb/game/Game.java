@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable {
 		if (getGameState() == 1) {
 			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 - 25, "Start", handler, 2, this, ID.StartButton));
 			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 + 35, "Shop", handler, 3, this, ID.ShopButton));
-			handler.addObject(new Button(50,50, "Exit", handler, 2, this, ID.ExitButton));
+			handler.addObject(new Button(this.getWidth() - 110, this.getHeight() - 20, "Help?", handler, 4, this, ID.HelpButton));
 			
 		}
 

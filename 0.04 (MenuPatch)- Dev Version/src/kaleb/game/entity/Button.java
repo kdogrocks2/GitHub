@@ -31,12 +31,28 @@ public class Button extends GameObject {
 			}
 
 			if (game.getGameState() == 3) {
-				
+
 				if (tempObject.getId() == ID.ExitButton) {
 					g.setColor(Color.red);
 					g.fillRect(x, y, 100, 20);
 					g.setColor(Color.cyan);
 					g.drawString(label, x + 50, y + 10);
+				}
+			}
+
+			if (game.getGameState() == 4) {
+
+				if (tempObject.getId() == ID.ExitButton) {
+					g.setColor(Color.red);
+					g.fillRect(x, y, 100, 20);
+					g.setColor(Color.cyan);
+					g.drawString(label, x + 50, y + 10);
+
+					g.drawString("Welcome to my game!", 130, 20);
+					g.drawString("Your score is determined by how many enemies you kill. ", 130, 40);
+					g.drawString("The later on you go in the game, the more they are worth.",130,60 );
+					g.drawString("Press SPACE to shoot!",130,120 );
+					g.drawString("HAVE FUUN!1!",130,160);
 				}
 			}
 
@@ -77,7 +93,7 @@ public class Button extends GameObject {
 					if (handler.getClickLocation() != null)
 						if (tempObject.getBounds().contains(handler.getClickLocation())) {
 							handler.object.clear();
-							handler.addObject(new Button(10,10, "Exit", handler, 1, game, ID.ExitButton));
+							handler.addObject(new Button(10, 10, "Exit", handler, 1, game, ID.ExitButton));
 							gamestate = 3;
 
 							handler.setClickLocation(100000, 0);
@@ -87,7 +103,7 @@ public class Button extends GameObject {
 						}
 				}
 
-				// This button exits the shop
+				// This button exits things and returns to menu 1
 				if (tempObject.getId() == ID.ExitButton) {
 					if (handler.getClickLocation() != null)
 						if (tempObject.getBounds().contains(handler.getClickLocation())) {
@@ -95,6 +111,18 @@ public class Button extends GameObject {
 							gamestate = 1;
 							handler.addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 - 25, "Start", handler, 2, game, ID.StartButton));
 							handler.addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", handler, 3, game, ID.ShopButton));
+							System.out.println(gamestate);
+							handler.setClickLocation(100000, 0);
+							handler.setGameState(gamestate);
+						}
+				}
+
+				if (tempObject.getId() == ID.HelpButton) {
+					if (handler.getClickLocation() != null)
+						if (tempObject.getBounds().contains(handler.getClickLocation())) {
+							handler.object.clear();
+							handler.addObject(new Button(10, 10, "Exit", handler, 1, game, ID.ExitButton));
+							gamestate = 4;
 							System.out.println(gamestate);
 							handler.setClickLocation(100000, 0);
 							handler.setGameState(gamestate);
