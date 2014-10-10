@@ -6,12 +6,12 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
-import kaleb.game.entity.Button;
 import kaleb.game.entity.Enemy;
 import kaleb.game.entity.ID;
 import kaleb.game.entity.LateralEnemyLeftToRight;
 import kaleb.game.entity.LateralEnemyRightToLeft;
 import kaleb.game.entity.Player;
+import kaleb.game.entity.Button;
 import kaleb.game.screen.Screen;
 
 public class Game extends Canvas implements Runnable {
@@ -26,7 +26,6 @@ public class Game extends Canvas implements Runnable {
 	public String timeDisplay;
 	Random rand = new Random();
 	public int chance;
-	private int enemyNum;
 	private int gameState;
 
 	// makes sure the first spawn doesn't happen 60 times
@@ -34,7 +33,6 @@ public class Game extends Canvas implements Runnable {
 
 	public Game() {
 		chance = 1;
-		enemyNum = 1;
 		handler = new Handler(this);
 		this.addKeyListener(new Keyboard(handler));
 		this.addMouseListener(new Mouse(handler));
@@ -47,7 +45,10 @@ public class Game extends Canvas implements Runnable {
 		setGameState(1);
 
 		if (getGameState() == 1) {
-			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 - 25, "hi", handler, this, ID.Button));
+			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 - 25, "Start", handler, 2, this, ID.StartButton));
+			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 + 35, "Shop", handler, 3, this, ID.ShopButton));
+			handler.addObject(new Button(50,50, "Exit", handler, 2, this, ID.ExitButton));
+			
 		}
 
 	}
@@ -74,12 +75,7 @@ public class Game extends Canvas implements Runnable {
 
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
-		if (getGameState() == 1) {
-			handler.render(g);
-		}
-		if (getGameState() == 2) {
-			handler.render(g);
-		}
+		handler.render(g);
 		g.setColor(Color.RED);
 		if (getGameState() == 2)
 			g.drawString(timeDisplay, 10, 10);
@@ -93,23 +89,17 @@ public class Game extends Canvas implements Runnable {
 		if (getGameState() == 2 && isSpawned() == false) {
 			handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, handler, ID.Player));
 			handler.addObject(new Enemy(20, 20, ID.Enemy));
-			handler.addObject(new Enemy(this.getWidth() - 30, this.getHeight() - 30, ID.Enemy2));
+			handler.addObject(new Enemy(this.getWidth() - 30, this.getHeight() - 30, ID.Enemy));
 			setSpawned(true);
-		}
-		if (getGameState() == 1) {
-			handler.tick();
 		}
 
 		if (getGameState() == 2) {
-			handler.tick();
 			timeSurvived++;
 			timeDisplay = new String("You have survived for " + timeSurvived / 60 + ".");
 			if ((timeSurvived / 60) % 10 == 0 && timeSurvived / 60 != 0) {
 
 				handler.addObject(new Enemy(20, 20, ID.Enemy));
 
-				enemyNum++;
-				System.out.println(enemyNum);
 			}
 			// every 3 seconds it roles a dice (represented by chance)
 			// if chance == 81 it calls latAttack()
@@ -123,7 +113,7 @@ public class Game extends Canvas implements Runnable {
 				}
 			}
 		}
-
+		handler.tick();
 	}
 
 	// /this is the code for the blue squares that go from left to right

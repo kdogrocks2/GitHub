@@ -9,7 +9,6 @@ import kaleb.game.entity.Button;
 import kaleb.game.entity.GameObject;
 import kaleb.game.entity.ID;
 import kaleb.game.entity.Player;
-
 public class Handler {
 
 	Player player;
@@ -69,7 +68,7 @@ public class Handler {
 					// This solved the collision bug
 					for (int q = 0; q < object.size(); q++) {
 						GameObject tempEnemy = object.get(q);
-						if (tempEnemy.getId() == ID.Enemy || tempEnemy.getId() == ID.Enemy2 || tempEnemy.getId() == ID.Enemy3 || tempEnemy.getId() == ID.Enemy4 || tempEnemy.getId() == ID.Enemy5) {
+						if (tempEnemy.getId() == ID.Enemy) {
 
 							if (tempEnemy.getBounds().intersects(tempBoundsBullet)) {
 								removeObject(tempEnemy);
@@ -101,14 +100,18 @@ public class Handler {
 			// runs every tick
 			// if it returns true the player loses
 			if (tempBoundsPlayer != null) {
-				if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.Enemy2 || tempObject.getId() == ID.LatEnemyRL || tempObject.getId() == ID.LatEnemyLR) {
+				if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.LatEnemyRL || tempObject.getId() == ID.LatEnemyLR) {
 					if (tempObject.getBounds().intersects(tempBoundsPlayer)) {
 
 						game.setGameState(1);
 						object.clear();
-						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, game, ID.Button));
+						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, 2, game, ID.StartButton));
+						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", this, 3, game, ID.ShopButton));
+						
 						setShooting(false);
 						game.setSpawned(false);
+						
+						
 						// sets timeSurvived in Game == 0;
 						game.resetTimeSurvived();
 					}
