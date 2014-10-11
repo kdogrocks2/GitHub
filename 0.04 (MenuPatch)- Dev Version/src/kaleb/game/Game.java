@@ -7,13 +7,11 @@ import java.awt.image.BufferStrategy;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Random;
-
 import kaleb.game.entity.Button;
 import kaleb.game.entity.Enemy;
 import kaleb.game.entity.ID;
@@ -52,28 +50,10 @@ public class Game extends Canvas implements Runnable {
 		// if gamestate == 2 the player is playing the game
 		// gamestate 1 is the title screen
 		// 3 is shop
-		//4 is help
+		// 4 is help
 		setGameState(1);
-		
-		
-		
-		
-		//This code sets the Score int equal to the one in the file'
-		//Allows the player to leave the game and come back with the same score.
-		//FINNALLYYLLYLYLYLY
-		try {
-			reader = new BufferedReader(new FileReader("score.txt"));
-			score = Integer.parseInt(reader.readLine());
-		} catch (NumberFormatException | IOException e) {
-			e.printStackTrace();
-		}
 
-		if (getGameState() == 1) {
-			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 - 25, "Start", handler, 2, this, ID.StartButton));
-			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 + 35, "Shop", handler, 3, this, ID.ShopButton));
-			handler.addObject(new Button(this.getWidth() - 110, this.getHeight() - 20, "Help?", handler, 4, this, ID.HelpButton));
-
-		}
+		retrieveScore();
 
 	}
 
@@ -103,7 +83,7 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.RED);
 		if (getGameState() == 2)
 			g.drawString(timeDisplay, 10, 10);
-		g.drawString("Score: " + Integer.toString(score), this.getWidth() - 50, 10);
+		g.drawString("Score: " + Integer.toString(score), this.getWidth() - 200, 10);
 
 		g.dispose();
 		bs.show();
@@ -153,18 +133,49 @@ public class Game extends Canvas implements Runnable {
 		handler.addObject(new LateralEnemyLeftToRight(-35, 400, ID.LatEnemyLR));
 	}
 
+	// This stores the current score in a txt file
 	public void storeScore() throws IOException {
 		// This code outputs a file to the directory that the jar is in
 		// Should work on any computer but it might throw a security error
 		// If i ever convert it into an APPLETT
 		Writer output = null;
+
+		// This changes score to a String so the writer can write it
 		String text = Integer.toString(score);
+
+		// this creates the file if it isn't made
 		File file = new File("Score.txt");
+		// this tells the writer what file to edit
 		output = new BufferedWriter(new FileWriter(file));
+		// This writes the things
 		output.write(text);
+		// this closes the file, it wont save if you don't have this
 		output.close();
+
+		// And this is just debug stuff :)
 		System.out.println("Worked");
 
+	}
+
+	// This code sets the Score int equal to the one in the file'
+	// Allows the player to leave the game and come back with the same
+	// score.
+	// FINNALLYYLLYLYLYLY
+	private void retrieveScore() {
+
+		try {
+			reader = new BufferedReader(new FileReader("score.txt"));
+			score = Integer.parseInt(reader.readLine());
+		} catch (NumberFormatException | IOException e) {
+			e.printStackTrace();
+		}
+
+		if (getGameState() == 1) {
+			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 - 25, "Start", handler,  this, ID.StartButton));
+			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 + 35, "Shop", handler,  this, ID.ShopButton));
+			handler.addObject(new Button(this.getWidth() - 110, this.getHeight() - 20, "Help?", handler,  this, ID.HelpButton));
+
+		}
 	}
 
 	public void resetTimeSurvived() {

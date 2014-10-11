@@ -9,8 +9,10 @@ import kaleb.game.Handler;
 
 public class Button extends GameObject {
 
-	public Button(int x, int y, String label, Handler handler, int gamestate, Game game, ID id) {
-		super(x, y, label, handler, gamestate, game, id);
+	private boolean insufficientFunds = false;
+
+	public Button(int x, int y, String label, Handler handler, Game game, ID id) {
+		super(x, y, label, handler, game, id);
 
 		boundingBox = new Rectangle(x, y, 100, 20);
 
@@ -32,14 +34,14 @@ public class Button extends GameObject {
 
 			if (game.getGameState() == 3) {
 
-				if (tempObject.getId() == ID.ExitButton) {
+				if (tempObject.getId() == ID.ExitButton || tempObject.getId() == ID.SpeedUpgradeButton) {
 					g.setColor(Color.red);
 					g.fillRect(x, y, 100, 20);
 					g.setColor(Color.cyan);
 					g.drawString(label, x + 50, y + 10);
-					
-					
-					g.drawString("Not implemented yet", 320,240);
+					if (insufficientFunds == true) {
+						g.drawString("You don't have enough money! You need " + price, 350, 300);
+					}
 				}
 			}
 
@@ -53,9 +55,9 @@ public class Button extends GameObject {
 
 					g.drawString("Welcome to my game!", 130, 20);
 					g.drawString("Your score is determined by how many enemies you kill. ", 130, 40);
-					g.drawString("The later on you go in the game, the more they are worth.",130,60 );
-					g.drawString("Press SPACE to shoot!",130,120 );
-					g.drawString("HAVE FUUN!1!",130,160);
+					g.drawString("The later on you go in the game, the more they are worth.", 130, 60);
+					g.drawString("Press SPACE to shoot!", 130, 120);
+					g.drawString("HAVE FUUN!1!", 130, 160);
 				}
 			}
 
@@ -96,7 +98,13 @@ public class Button extends GameObject {
 					if (handler.getClickLocation() != null)
 						if (tempObject.getBounds().contains(handler.getClickLocation())) {
 							handler.object.clear();
-							handler.addObject(new Button(10, 10, "Exit", handler, 1, game, ID.ExitButton));
+							// Add any button you want to show on the Shop
+							// screen between these slashes
+							// ///
+							handler.addObject(new Button(80, 150, "+Speed!", handler, game, ID.SpeedUpgradeButton));
+
+							// ///
+							handler.addObject(new Button(10, 10, "Exit", handler, game, ID.ExitButton));
 							gamestate = 3;
 
 							handler.setClickLocation(100000, 0);
@@ -112,24 +120,44 @@ public class Button extends GameObject {
 						if (tempObject.getBounds().contains(handler.getClickLocation())) {
 							handler.object.clear();
 							gamestate = 1;
-							handler.addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 - 25, "Start", handler, 2, game, ID.StartButton));
-							handler.addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", handler, 3, game, ID.ShopButton));
-							handler.addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", handler, 4, game, ID.HelpButton));
+							handler.addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 - 25, "Start", handler, game, ID.StartButton));
+							handler.addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", handler, game, ID.ShopButton));
+							handler.addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", handler, game, ID.HelpButton));
+							System.out.println(gamestate);
+							handler.setClickLocation(100000, 0);
+							handler.setGameState(gamestate);
+						}
+				}
+				// Displays the help screen
+				if (tempObject.getId() == ID.HelpButton) {
+					if (handler.getClickLocation() != null)
+						if (tempObject.getBounds().contains(handler.getClickLocation())) {
+							handler.object.clear();
+							handler.addObject(new Button(10, 10, "Exit", handler, game, ID.ExitButton));
+							gamestate = 4;
 							System.out.println(gamestate);
 							handler.setClickLocation(100000, 0);
 							handler.setGameState(gamestate);
 						}
 				}
 
-				if (tempObject.getId() == ID.HelpButton) {
+				// Upgrades the players speed for 5000 points
+				if (tempObject.getId() == ID.SpeedUpgradeButton) {
+					price = 5000;
+
 					if (handler.getClickLocation() != null)
 						if (tempObject.getBounds().contains(handler.getClickLocation())) {
-							handler.object.clear();
-							handler.addObject(new Button(10, 10, "Exit", handler, 1, game, ID.ExitButton));
-							gamestate = 4;
-							System.out.println(gamestate);
-							handler.setClickLocation(100000, 0);
-							handler.setGameState(gamestate);
+							if (game.getScore() > price) {
+								handler.removeObject(tempObject);
+								handler.setClickLocation(100000, 0);
+								System.out.println("Upgraded Speed!");
+								game.setScore(game.getScore() - 5000);
+								handler.speedUpgraded = true;
+							} else {
+								if (tempObject.getBounds().contains(handler.getClickLocation())) {
+									insufficientFunds = true;
+								}
+							}
 						}
 				}
 

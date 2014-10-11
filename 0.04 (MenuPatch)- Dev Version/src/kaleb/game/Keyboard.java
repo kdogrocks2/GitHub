@@ -9,7 +9,7 @@ import kaleb.game.entity.ID;
 
 public class Keyboard implements KeyListener {
 	private Handler handler;
-	
+
 	public Keyboard(Handler handler) {
 		this.handler = handler;
 	}
@@ -24,23 +24,43 @@ public class Keyboard implements KeyListener {
 			// only runs the key events if the id of i is Player
 			if (tempObject.getId() == ID.Player) {
 				if (key == KeyEvent.VK_W) {
-					tempObject.setVely(-3);
+					if (handler.speedUpgraded == false)
+						tempObject.setVely(-3);
+
+					else {
+						tempObject.setVely(-6);
+					}
 				}
 				if (key == KeyEvent.VK_D) {
-					tempObject.setVelx(3);
+					if (handler.speedUpgraded == false)
+						tempObject.setVelx(3);
+
+					else {
+						tempObject.setVelx(6);
+					}
 				}
 				if (key == KeyEvent.VK_S) {
-					tempObject.setVely(3);
+					if (handler.speedUpgraded == false)
+						tempObject.setVely(3);
+
+					else {
+						tempObject.setVely(6);
+					}
 				}
 				if (key == KeyEvent.VK_A) {
-					tempObject.setVelx(-3);
+
+					if (handler.speedUpgraded == false)
+						tempObject.setVelx(-3);
+
+					else {
+						tempObject.setVelx(-6);
+					}
 				}
 				if (key == KeyEvent.VK_SPACE) {
 
-					
-					if(handler.isShooting() == false){
-					handler.addObject(new Bullet(tempObject.getX() + 25, tempObject.getY(), ID.Bullet));
-					handler.setShooting(true); 
+					if (handler.isShooting() == false) {
+						handler.addObject(new Bullet(tempObject.getX() + 25, tempObject.getY(), ID.Bullet));
+						handler.setShooting(true);
 					}
 				}
 			}

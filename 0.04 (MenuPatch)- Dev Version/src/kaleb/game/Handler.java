@@ -18,7 +18,11 @@ public class Handler {
 	Rectangle tempBoundsPlayer;
 	Rectangle tempBoundsBullet;
 	Rectangle tempBoundsBullet2;
+
 	Point clickLocation;
+
+	public boolean speedUpgraded = false;
+
 	boolean shooting = false;
 
 	public int oneTick = 0;
@@ -109,10 +113,12 @@ public class Handler {
 
 						game.setGameState(1);
 						object.clear();
-						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, 2, game, ID.StartButton));
-						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", this, 3, game, ID.ShopButton));
-						addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", this, 4, game, ID.HelpButton));
-
+						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, game, ID.StartButton));
+						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", this, game, ID.ShopButton));
+						addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", this, game, ID.HelpButton));
+						//Resets the players upgrades after he dies, might change.
+						resetUpgrades();
+						
 						setShooting(false);
 						game.setSpawned(false);
 						try {
@@ -133,6 +139,10 @@ public class Handler {
 			tempObject.tick();
 
 		}
+	}
+
+	public void resetUpgrades() {
+		speedUpgraded = false;
 	}
 
 	// goes through each object and renders them

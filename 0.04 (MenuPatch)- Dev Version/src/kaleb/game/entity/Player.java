@@ -27,9 +27,15 @@ public class Player extends GameObject {
 	}
 
 	public void tick() {
+		
+		
 		x += velx;
 		y += vely;
+		
+		
 		boundingBox = new Rectangle(x, y, 50, 50);
 	}
+	
+	
 
 }

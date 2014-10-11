@@ -15,6 +15,7 @@ public abstract class GameObject {
 	//This determines what gamestate the button goes to if you click on it
 	//You don't have to use it, just set it to negative one
 	protected int gamestate;
+	protected int price;
 	protected String label;
 	protected Handler handler;
 	protected Game game;
@@ -29,12 +30,11 @@ public abstract class GameObject {
 	
 	
 	//this is the constructor that buttons use, i didn't want to have to remake it every time i  have a new button but normal entities dont need this stuff
-	public GameObject(int x, int y, String label, Handler handler,int gamestate, Game game, ID id){
+	public GameObject(int x, int y, String label, Handler handler, Game game, ID id){
 		this.x = x;
 		this.y = y;
 		this.label = label;
 		this.handler = handler;
-		this.gamestate = gamestate;
 		this.game = game;
 		this.id = id;
 	}
