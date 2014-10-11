@@ -14,7 +14,7 @@ public class Bullet extends GameObject {
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.RED);
+		g.setColor(Color.WHITE);
 		g.fillRect(x, y, 5, 5);
 		Graphics2D g2d = (Graphics2D) g;
 		g.setColor(Color.BLACK);

@@ -3,12 +3,14 @@ package kaleb.game;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import kaleb.game.entity.Button;
 import kaleb.game.entity.GameObject;
 import kaleb.game.entity.ID;
 import kaleb.game.entity.Player;
+
 public class Handler {
 
 	Player player;
@@ -72,7 +74,9 @@ public class Handler {
 
 							if (tempEnemy.getBounds().intersects(tempBoundsBullet)) {
 								removeObject(tempEnemy);
-
+								// Your score is 10*timeSurvived * enemies
+								// killed
+								game.setScore(game.getScore() + (game.getTimeSurvived() / 60) * 10);
 							}
 						}
 					}
@@ -107,11 +111,16 @@ public class Handler {
 						object.clear();
 						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, 2, game, ID.StartButton));
 						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", this, 3, game, ID.ShopButton));
-						
+						addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", this, 4, game, ID.HelpButton));
+
 						setShooting(false);
 						game.setSpawned(false);
-						
-						
+						try {
+							game.storeScore();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						// sets timeSurvived in Game == 0;
 						game.resetTimeSurvived();
 					}

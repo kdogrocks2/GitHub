@@ -37,6 +37,9 @@ public class Button extends GameObject {
 					g.fillRect(x, y, 100, 20);
 					g.setColor(Color.cyan);
 					g.drawString(label, x + 50, y + 10);
+					
+					
+					g.drawString("Not implemented yet", 320,240);
 				}
 			}
 
@@ -61,7 +64,7 @@ public class Button extends GameObject {
 
 	public void tick() {
 		boundingBox = new Rectangle(x, y, 100, 20);
-		if (game.getGameState() == 1 || game.getGameState() == 3) {
+		if (game.getGameState() == 1 || game.getGameState() == 3 || game.getGameState() == 4) {
 			for (int i = 0; i < handler.object.size(); i++) {
 				GameObject tempObject = handler.object.get(i);
 
@@ -111,6 +114,7 @@ public class Button extends GameObject {
 							gamestate = 1;
 							handler.addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 - 25, "Start", handler, 2, game, ID.StartButton));
 							handler.addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", handler, 3, game, ID.ShopButton));
+							handler.addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", handler, 4, game, ID.HelpButton));
 							System.out.println(gamestate);
 							handler.setClickLocation(100000, 0);
 							handler.setGameState(gamestate);
