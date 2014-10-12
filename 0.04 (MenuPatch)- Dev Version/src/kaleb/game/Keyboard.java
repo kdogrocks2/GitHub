@@ -22,25 +22,57 @@ public class Keyboard implements KeyListener {
 			GameObject tempObject = handler.object.get(i);
 
 			// only runs the key events if the id of i is Player
+			// Also handles collision with the screen boundaries
+
 			if (tempObject.getId() == ID.Player) {
 				if (key == KeyEvent.VK_W) {
 
 					switch (handler.speedUpgraded) {
 
 					case 0:
-						tempObject.setVely(-3);
+						if (tempObject.getY() > 0) {
+							tempObject.setVely(-3);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(0);
+						}
 						break;
 					case 1:
-						tempObject.setVely(-4);
+						if (tempObject.getY() > 0) {
+							tempObject.setVely(-4);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(0);
+						}
 						break;
 					case 2:
-						tempObject.setVely(-5);
+						if (tempObject.getY() > 0) {
+							tempObject.setVely(-5);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(0);
+						}
 						break;
 					case 3:
-						tempObject.setVely(-6);
+						if (tempObject.getY() > 0) {
+							tempObject.setVely(-6);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(0);
+						}
 						break;
 					case 4:
-						tempObject.setVely(-7);
+						if (tempObject.getY() > 0) {
+							tempObject.setVely(-7);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(0);
+						}
 						break;
 					}
 				}
@@ -48,21 +80,46 @@ public class Keyboard implements KeyListener {
 					switch (handler.speedUpgraded) {
 
 					case 0:
-						tempObject.setVelx(3);
+						if (tempObject.getX() < 590) {
+							tempObject.setVelx(3);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(590);
+						}
 						break;
 					case 1:
-						tempObject.setVelx(4);
+						if (tempObject.getX() < 590) {
+							tempObject.setVelx(4);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(590);
+						}
 						break;
 					case 2:
-						tempObject.setVelx(5);
+						if (tempObject.getX() < 590) {
+							tempObject.setVelx(5);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(590);
+						}
 						break;
 					case 3:
-						tempObject.setVelx(6);
+						if (tempObject.getX() < 590) {
+							tempObject.setVelx(6);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(590);
+						}
 						break;
 					case 4:
-						tempObject.setVelx(7);
+						if (tempObject.getX() < 590) {
+							tempObject.setVelx(7);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(590);
+						}
 						break;
-					
+
 					}
 				}
 				if (key == KeyEvent.VK_S) {
@@ -70,19 +127,49 @@ public class Keyboard implements KeyListener {
 					switch (handler.speedUpgraded) {
 
 					case 0:
-						tempObject.setVely(3);
+						if (tempObject.getY() < 430) {
+							tempObject.setVely(3);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(430);
+						}
 						break;
 					case 1:
-						tempObject.setVely(4);
+						if (tempObject.getY() < 430) {
+							tempObject.setVely(4);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(430);
+						}
 						break;
 					case 2:
-						tempObject.setVely(5);
+						if (tempObject.getY() < 430) {
+							tempObject.setVely(5);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(430);
+						}
 						break;
 					case 3:
-						tempObject.setVely(6);
+						if (tempObject.getY() < 430) {
+							tempObject.setVely(6);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(430);
+						}
 						break;
 					case 4:
-						tempObject.setVely(7);
+						if (tempObject.getY() < 430) {
+							tempObject.setVely(7);
+
+						} else {
+							tempObject.setVely(0);
+							tempObject.setY(430);
+						}
 						break;
 					}
 
@@ -91,26 +178,51 @@ public class Keyboard implements KeyListener {
 					switch (handler.speedUpgraded) {
 
 					case 0:
-						tempObject.setVelx(-3);
+						if (tempObject.getX() > 0) {
+							tempObject.setVelx(-3);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(0);
+						}
 						break;
 					case 1:
-						tempObject.setVelx(-4);
+						if (tempObject.getX() > 0) {
+							tempObject.setVelx(-4);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(0);
+						}
 						break;
 					case 2:
-						tempObject.setVelx(-5);
+						if (tempObject.getX() > 0) {
+							tempObject.setVelx(-5);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(0);
+						}
 						break;
 					case 3:
-						tempObject.setVelx(-6);
+						if (tempObject.getX() > 0) {
+							tempObject.setVelx(-6);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(0);
+						}
 						break;
 					case 4:
-						tempObject.setVelx(-7);
+						if (tempObject.getX() > 0) {
+							tempObject.setVelx(-7);
+						} else {
+							tempObject.setVelx(0);
+							tempObject.setX(0);
+						}
 						break;
 					}
 				}
 				if (key == KeyEvent.VK_SPACE) {
 
 					if (handler.isShooting() == false) {
-						handler.addObject(new Bullet(tempObject.getX() + 25, tempObject.getY(),handler, ID.Bullet));
+						handler.addObject(new Bullet(tempObject.getX() + 25, tempObject.getY(), handler, ID.Bullet));
 						handler.setShooting(true);
 					}
 				}

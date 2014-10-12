@@ -109,30 +109,30 @@ public class Handler {
 			// bounding box we made earlier
 			// runs every tick
 			// if it returns true the player loses
-			if (tempBoundsPlayer != null) {
-				if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.LatEnemyRL || tempObject.getId() == ID.LatEnemyLR) {
-					if (tempObject.getBounds().intersects(tempBoundsPlayer)) {
-
-						game.setGameState(1);
-						object.clear();
-						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, game, ID.StartButton));
-						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", this, game, ID.ShopButton));
-						addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", this, game, ID.HelpButton));
-						//Resets the players upgrades after he dies, might change.
-						resetUpgrades();
-						
-						setShooting(false);
-						game.setSpawned(false);
-						try {
-							game.storeScore();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						// sets timeSurvived in Game == 0;
-						game.resetTimeSurvived();
-					}
-				}
-			}
+//			if (tempBoundsPlayer != null) {
+//				if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.LatEnemyRL || tempObject.getId() == ID.LatEnemyLR) {
+//					if (tempObject.getBounds().intersects(tempBoundsPlayer)) {
+//
+//						game.setGameState(1);
+//						object.clear();
+//						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, game, ID.StartButton));
+//						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", this, game, ID.ShopButton));
+//						addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", this, game, ID.HelpButton));
+//						//Resets the players upgrades after he dies, might change.
+//						resetUpgrades();
+//						
+//						setShooting(false);
+//						game.setSpawned(false);
+//						try {
+//							game.storeScore();
+//						} catch (IOException e) {
+//							e.printStackTrace();
+//						}
+//						// sets timeSurvived in Game == 0;
+//						game.resetTimeSurvived();
+//					}
+//				}
+//			}
 
 			if (oneTick == 0)
 				oneTick++;
