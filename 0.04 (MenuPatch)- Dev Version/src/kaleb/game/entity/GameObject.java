@@ -21,7 +21,7 @@ public abstract class GameObject {
 	protected Game game;
 	
 	
-	public GameObject(int x,int y,ID id){
+	public GameObject(int x,int y,Handler handler,ID id){
 		this.id = id;
 		this.x = x;
 		this.y = y;

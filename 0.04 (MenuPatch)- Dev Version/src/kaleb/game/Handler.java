@@ -21,7 +21,8 @@ public class Handler {
 
 	Point clickLocation;
 
-	public boolean speedUpgraded = false;
+	public int speedUpgraded = 0;
+	public int speedDowngraded = 0;
 
 	boolean shooting = false;
 
@@ -33,6 +34,7 @@ public class Handler {
 
 	// should contain all objects in the game
 	public LinkedList<GameObject> object = new LinkedList<GameObject>();
+	
 
 	// goes through each object and ticks them
 	public void tick() {
@@ -124,7 +126,6 @@ public class Handler {
 						try {
 							game.storeScore();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						// sets timeSurvived in Game == 0;
@@ -142,7 +143,8 @@ public class Handler {
 	}
 
 	public void resetUpgrades() {
-		speedUpgraded = false;
+		speedUpgraded = 0;
+		speedDowngraded = 0;
 	}
 
 	// goes through each object and renders them

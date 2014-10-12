@@ -10,10 +10,32 @@ import kaleb.game.Handler;
 public class Enemy extends GameObject {
 	Handler handler;
 
-	public Enemy(int x, int y, ID id) {
-		super(x, y, id);
-		velx = 4;
-		vely = 4;
+	public Enemy(int x, int y,Handler handler, ID id) {
+		super(x, y,handler, id);
+		
+		switch (handler.speedDowngraded) {
+		case 0:
+			velx = 4;
+			vely = 4;
+			break;
+		case 1:
+			velx = 3;
+			vely = 3;
+			break;
+		case 2:
+			velx = 2;
+			vely = 2;
+			break;
+		case 3: 
+			velx = 1;
+			vely = 1;
+			break;
+			
+
+		}
+
+//		velx = 4;
+//		vely = 4;
 		boundingBox = new Rectangle(x, y, 20, 20);
 
 	}

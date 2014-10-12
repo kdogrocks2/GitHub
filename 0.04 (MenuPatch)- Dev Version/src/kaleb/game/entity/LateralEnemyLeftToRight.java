@@ -5,12 +5,29 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-public class LateralEnemyLeftToRight extends GameObject{
+import kaleb.game.Handler;
 
-	public LateralEnemyLeftToRight(int x, int y, ID id) {
-		super(x, y, id);
+public class LateralEnemyLeftToRight extends GameObject {
+
+	public LateralEnemyLeftToRight(int x, int y,Handler handler, ID id) {
+		super(x, y,handler, id);
 		boundingBox = new Rectangle(x, y, 15, 15);
-		velx = 5;
+
+		switch (handler.speedDowngraded) {
+		case 0:
+			velx = 5;
+			break;
+		case 1:
+			velx = 4;
+			break;
+		case 2:
+			velx = 3;
+			break;
+		case 3:
+			velx = 2;
+			break;
+
+		}
 	}
 
 	public void render(Graphics g) {

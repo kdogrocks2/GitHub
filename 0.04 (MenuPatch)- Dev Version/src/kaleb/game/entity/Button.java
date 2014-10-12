@@ -9,7 +9,9 @@ import kaleb.game.Handler;
 
 public class Button extends GameObject {
 
-	private boolean insufficientFunds = false;
+	private int insufficientFunds = 0;
+	private boolean speedMaxed = false;
+	private boolean enemySpeedMaxed = false;
 
 	public Button(int x, int y, String label, Handler handler, Game game, ID id) {
 		super(x, y, label, handler, game, id);
@@ -38,11 +40,30 @@ public class Button extends GameObject {
 					g.setColor(Color.red);
 					g.fillRect(x, y, 100, 20);
 					g.setColor(Color.cyan);
-					g.drawString(label, x + 50, y + 10);
-					if (insufficientFunds == true) {
-						g.drawString("You don't have enough money! You need " + price, 350, 300);
+					g.drawString(label, x + 30, y + 10);
+					if (speedMaxed) {
+						g.drawString("You've maxed speed!", 350, 380);
+					}
+
+				}
+				if (tempObject.getId() == ID.EnemySpeedDowngradeButton) {
+					g.setColor(Color.red);
+					g.fillRect(x, y, 100, 20);
+					g.setColor(Color.cyan);
+					g.drawString(label, x + 30, y + 10);
+					if (enemySpeedMaxed) {
+						g.drawString("You've pooped on the enemies speed!", 350, 400);
 					}
 				}
+				
+				switch(insufficientFunds){
+				case 1: g.drawString("You need 2000 for that!", 320,400);
+				break;
+				case 2: g.drawString("You need 8000 for that!", 320,400);
+				break;
+				
+				}
+
 			}
 
 			if (game.getGameState() == 4) {
@@ -102,6 +123,7 @@ public class Button extends GameObject {
 							// screen between these slashes
 							// ///
 							handler.addObject(new Button(80, 150, "+Speed!", handler, game, ID.SpeedUpgradeButton));
+							handler.addObject(new Button(80, 180, "-EnemySpeed!", handler, game, ID.EnemySpeedDowngradeButton));
 
 							// ///
 							handler.addObject(new Button(10, 10, "Exit", handler, game, ID.ExitButton));
@@ -143,19 +165,72 @@ public class Button extends GameObject {
 
 				// Upgrades the players speed for 5000 points
 				if (tempObject.getId() == ID.SpeedUpgradeButton) {
-					price = 5000;
+
+					// The price of a speed upgrade
+					price = 2000;
 
 					if (handler.getClickLocation() != null)
 						if (tempObject.getBounds().contains(handler.getClickLocation())) {
-							if (game.getScore() > price) {
-								handler.removeObject(tempObject);
-								handler.setClickLocation(100000, 0);
-								System.out.println("Upgraded Speed!");
-								game.setScore(game.getScore() - 5000);
-								handler.speedUpgraded = true;
+							if (handler.speedUpgraded <= 3) {
+								if (game.getScore() > price) {
+									System.out.println(handler.speedUpgraded);
+									handler.setClickLocation(100000, 0);
+									System.out.println("Upgraded Speed!");
+									game.setScore(game.getScore() - price);
+
+									// Tells handler what level your speed is
+									// Keyboard uses this
+									handler.speedUpgraded++;
+
+									// If you dont have enough money it tells
+									// the player
+								} else {
+									if (tempObject.getBounds().contains(handler.getClickLocation())) {
+										insufficientFunds = 1;
+									}
+								}
+
+								// If you've maxed the speed it displays a
+								// string to tell the player
 							} else {
 								if (tempObject.getBounds().contains(handler.getClickLocation())) {
-									insufficientFunds = true;
+									speedMaxed = true;
+								}
+							}
+						}
+				}
+
+				if (tempObject.getId() == ID.EnemySpeedDowngradeButton) {
+
+					// The price of a speed downgrade
+					price = 8000;
+
+					if (handler.getClickLocation() != null)
+						if (tempObject.getBounds().contains(handler.getClickLocation())) {
+							if (handler.speedDowngraded <= 2) {
+								if (game.getScore() > price) {
+									System.out.println(handler.speedDowngraded);
+									handler.setClickLocation(100000, 0);
+									System.out.println("Downgraded enemy speed");
+									game.setScore(game.getScore() - price);
+
+									// Tells handler what level your speed is
+									// Keyboard uses this
+									handler.speedDowngraded++;
+
+									// If you dont have enough money it tells
+									// the player
+								} else {
+									if (tempObject.getBounds().contains(handler.getClickLocation())) {
+										insufficientFunds = 2;
+									}
+								}
+
+								// If you've maxed the speed it displays a
+								// string to tell the player
+							} else {
+								if (tempObject.getBounds().contains(handler.getClickLocation())) {
+									enemySpeedMaxed = true;
 								}
 							}
 						}
@@ -164,5 +239,4 @@ public class Button extends GameObject {
 			}
 		}
 	}
-
 }

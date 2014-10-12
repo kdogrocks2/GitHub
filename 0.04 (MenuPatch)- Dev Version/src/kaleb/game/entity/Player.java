@@ -11,8 +11,7 @@ public class Player extends GameObject {
 	Handler handler;
 
 	public Player(int x, int y,Handler handler, ID id) {
-		super(x, y, id);
-		this.handler = handler;
+		super(x, y,handler, id);
 		boundingBox = new Rectangle(x, y, 50, 50);
 
 	}

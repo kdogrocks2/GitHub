@@ -24,42 +24,93 @@ public class Keyboard implements KeyListener {
 			// only runs the key events if the id of i is Player
 			if (tempObject.getId() == ID.Player) {
 				if (key == KeyEvent.VK_W) {
-					if (handler.speedUpgraded == false)
-						tempObject.setVely(-3);
 
-					else {
+					switch (handler.speedUpgraded) {
+
+					case 0:
+						tempObject.setVely(-3);
+						break;
+					case 1:
+						tempObject.setVely(-4);
+						break;
+					case 2:
+						tempObject.setVely(-5);
+						break;
+					case 3:
 						tempObject.setVely(-6);
+						break;
+					case 4:
+						tempObject.setVely(-7);
+						break;
 					}
 				}
 				if (key == KeyEvent.VK_D) {
-					if (handler.speedUpgraded == false)
-						tempObject.setVelx(3);
+					switch (handler.speedUpgraded) {
 
-					else {
+					case 0:
+						tempObject.setVelx(3);
+						break;
+					case 1:
+						tempObject.setVelx(4);
+						break;
+					case 2:
+						tempObject.setVelx(5);
+						break;
+					case 3:
 						tempObject.setVelx(6);
+						break;
+					case 4:
+						tempObject.setVelx(7);
+						break;
+					
 					}
 				}
 				if (key == KeyEvent.VK_S) {
-					if (handler.speedUpgraded == false)
-						tempObject.setVely(3);
 
-					else {
+					switch (handler.speedUpgraded) {
+
+					case 0:
+						tempObject.setVely(3);
+						break;
+					case 1:
+						tempObject.setVely(4);
+						break;
+					case 2:
+						tempObject.setVely(5);
+						break;
+					case 3:
 						tempObject.setVely(6);
+						break;
+					case 4:
+						tempObject.setVely(7);
+						break;
 					}
+
 				}
 				if (key == KeyEvent.VK_A) {
+					switch (handler.speedUpgraded) {
 
-					if (handler.speedUpgraded == false)
+					case 0:
 						tempObject.setVelx(-3);
-
-					else {
+						break;
+					case 1:
+						tempObject.setVelx(-4);
+						break;
+					case 2:
+						tempObject.setVelx(-5);
+						break;
+					case 3:
 						tempObject.setVelx(-6);
+						break;
+					case 4:
+						tempObject.setVelx(-7);
+						break;
 					}
 				}
 				if (key == KeyEvent.VK_SPACE) {
 
 					if (handler.isShooting() == false) {
-						handler.addObject(new Bullet(tempObject.getX() + 25, tempObject.getY(), ID.Bullet));
+						handler.addObject(new Bullet(tempObject.getX() + 25, tempObject.getY(),handler, ID.Bullet));
 						handler.setShooting(true);
 					}
 				}

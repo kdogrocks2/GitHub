@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Random;
+
 import kaleb.game.entity.Button;
 import kaleb.game.entity.Enemy;
 import kaleb.game.entity.ID;
@@ -93,8 +94,8 @@ public class Game extends Canvas implements Runnable {
 	private void tick() {
 		if (getGameState() == 2 && isSpawned() == false) {
 			handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, handler, ID.Player));
-			handler.addObject(new Enemy(20, 20, ID.Enemy));
-			handler.addObject(new Enemy(this.getWidth() - 30, this.getHeight() - 30, ID.Enemy));
+			handler.addObject(new Enemy(20, 20, handler, ID.Enemy));
+			handler.addObject(new Enemy(this.getWidth() - 30, this.getHeight() - 30, handler, ID.Enemy));
 			setSpawned(true);
 		}
 
@@ -103,7 +104,7 @@ public class Game extends Canvas implements Runnable {
 			timeDisplay = new String("You have survived for " + timeSurvived / 60 + ".");
 			if ((timeSurvived / 60) % 10 == 0 && timeSurvived / 60 != 0) {
 
-				handler.addObject(new Enemy(20, 20, ID.Enemy));
+				handler.addObject(new Enemy(20, 20, handler, ID.Enemy));
 
 			}
 			// every 3 seconds it roles a dice (represented by chance)
@@ -125,12 +126,12 @@ public class Game extends Canvas implements Runnable {
 	// Collision is handled in Handler and they are removed if they go off
 	// screen to conserve resources
 	public void latAttack() {
-		handler.addObject(new LateralEnemyRightToLeft(640, 240, ID.LatEnemyRL));
-		handler.addObject(new LateralEnemyRightToLeft(680, (240 / 3), ID.LatEnemyRL));
-		handler.addObject(new LateralEnemyRightToLeft(700, 400, ID.LatEnemyRL));
-		handler.addObject(new LateralEnemyLeftToRight(0, this.getHeight() / 2, ID.LatEnemyLR));
-		handler.addObject(new LateralEnemyLeftToRight(-50, (240 / 3), ID.LatEnemyLR));
-		handler.addObject(new LateralEnemyLeftToRight(-35, 400, ID.LatEnemyLR));
+		handler.addObject(new LateralEnemyRightToLeft(640, 240, handler, ID.LatEnemyRL));
+		handler.addObject(new LateralEnemyRightToLeft(680, (240 / 3), handler, ID.LatEnemyRL));
+		handler.addObject(new LateralEnemyRightToLeft(700, 400, handler, ID.LatEnemyRL));
+		handler.addObject(new LateralEnemyLeftToRight(0, this.getHeight() / 2, handler, ID.LatEnemyLR));
+		handler.addObject(new LateralEnemyLeftToRight(-50, (240 / 3), handler, ID.LatEnemyLR));
+		handler.addObject(new LateralEnemyLeftToRight(-35, 400, handler, ID.LatEnemyLR));
 	}
 
 	// This stores the current score in a txt file
@@ -152,9 +153,6 @@ public class Game extends Canvas implements Runnable {
 		// this closes the file, it wont save if you don't have this
 		output.close();
 
-		// And this is just debug stuff :)
-		System.out.println("Worked");
-
 	}
 
 	// This code sets the Score int equal to the one in the file'
@@ -171,9 +169,9 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		if (getGameState() == 1) {
-			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 - 25, "Start", handler,  this, ID.StartButton));
-			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 + 35, "Shop", handler,  this, ID.ShopButton));
-			handler.addObject(new Button(this.getWidth() - 110, this.getHeight() - 20, "Help?", handler,  this, ID.HelpButton));
+			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 - 25, "Start", handler, this, ID.StartButton));
+			handler.addObject(new Button(this.getWidth() / 2 - 50, this.getHeight() / 2 + 35, "Shop", handler, this, ID.ShopButton));
+			handler.addObject(new Button(this.getWidth() - 110, this.getHeight() - 20, "Help?", handler, this, ID.HelpButton));
 
 		}
 	}
@@ -189,7 +187,9 @@ public class Game extends Canvas implements Runnable {
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
+		@SuppressWarnings("unused")
 		int updates = 0;
+		@SuppressWarnings("unused")
 		int frames = 0;
 		while (running) {
 			long now = System.nanoTime();
@@ -205,7 +205,7 @@ public class Game extends Canvas implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println("FPS: " + frames + " TICKS: " + updates);
+				// System.out.println("FPS: " + frames + " TICKS: " + updates);
 				frames = 0;
 				updates = 0;
 			}

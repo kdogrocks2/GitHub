@@ -5,10 +5,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import kaleb.game.Handler;
+
 public class Bullet extends GameObject {
 
-	public Bullet(int x, int y, ID id) {
-		super(x, y, id);
+	public Bullet(int x, int y,Handler handler, ID id) {
+		super(x, y,handler, id);
 		boundingBox = new Rectangle(x, y, 5, 5);
 		vely = 4;
 	}
