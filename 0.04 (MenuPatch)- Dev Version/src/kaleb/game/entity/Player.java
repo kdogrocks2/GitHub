@@ -10,8 +10,8 @@ import kaleb.game.Handler;
 public class Player extends GameObject {
 	Handler handler;
 
-	public Player(int x, int y,Handler handler, ID id) {
-		super(x, y,handler, id);
+	public Player(int x, int y, Handler handler, ID id) {
+		super(x, y, handler, id);
 		boundingBox = new Rectangle(x, y, 50, 50);
 
 	}
@@ -26,15 +26,11 @@ public class Player extends GameObject {
 	}
 
 	public void tick() {
-		
-		
+
 		x += velx;
 		y += vely;
-		
-		
+
 		boundingBox = new Rectangle(x, y, 50, 50);
 	}
-	
-	
 
 }

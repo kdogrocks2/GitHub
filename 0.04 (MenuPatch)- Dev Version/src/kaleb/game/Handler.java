@@ -1,5 +1,6 @@
 package kaleb.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -23,6 +24,7 @@ public class Handler {
 
 	public int speedUpgraded = 0;
 	public int speedDowngraded = 0;
+	public int healthUpgraded = 1;
 
 	boolean shooting = false;
 
@@ -34,7 +36,6 @@ public class Handler {
 
 	// should contain all objects in the game
 	public LinkedList<GameObject> object = new LinkedList<GameObject>();
-	
 
 	// goes through each object and ticks them
 	public void tick() {
@@ -109,30 +110,33 @@ public class Handler {
 			// bounding box we made earlier
 			// runs every tick
 			// if it returns true the player loses
-//			if (tempBoundsPlayer != null) {
-//				if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.LatEnemyRL || tempObject.getId() == ID.LatEnemyLR) {
-//					if (tempObject.getBounds().intersects(tempBoundsPlayer)) {
-//
-//						game.setGameState(1);
-//						object.clear();
-//						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, game, ID.StartButton));
-//						addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", this, game, ID.ShopButton));
-//						addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", this, game, ID.HelpButton));
-//						//Resets the players upgrades after he dies, might change.
-//						resetUpgrades();
-//						
-//						setShooting(false);
-//						game.setSpawned(false);
-//						try {
-//							game.storeScore();
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-//						// sets timeSurvived in Game == 0;
-//						game.resetTimeSurvived();
-//					}
-//				}
-//			}
+			if (tempBoundsPlayer != null) {
+				if (tempObject.getId() == ID.Enemy || tempObject.getId() == ID.LatEnemyRL || tempObject.getId() == ID.LatEnemyLR) {
+					if (tempObject.getBounds().intersects(tempBoundsPlayer)) {
+						healthUpgraded--;
+						if (healthUpgraded == 0) {
+							game.setGameState(1);
+							object.clear();
+							addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2, "Start", this, game, ID.StartButton));
+							addObject(new Button(game.getWidth() / 2 - 50, game.getHeight() / 2 + 35, "Shop", this, game, ID.ShopButton));
+							addObject(new Button(game.getWidth() - 110, game.getHeight() - 20, "Help?", this, game, ID.HelpButton));
+							// Resets the players upgrades after he dies, might
+							// change.
+							resetUpgrades();
+
+							setShooting(false);
+							game.setSpawned(false);
+							try {
+								game.storeScore();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							// sets timeSurvived in Game == 0;
+							game.resetTimeSurvived();
+						}
+					}
+				}
+			}
 
 			if (oneTick == 0)
 				oneTick++;
@@ -145,6 +149,7 @@ public class Handler {
 	public void resetUpgrades() {
 		speedUpgraded = 0;
 		speedDowngraded = 0;
+		healthUpgraded = 1;
 	}
 
 	// goes through each object and renders them
@@ -152,6 +157,10 @@ public class Handler {
 		for (int i = 0; i < object.size(); i++) {
 			GameObject tempObject = object.get(i);
 
+			//if (healthUpgraded > 1) {
+				g.setColor(Color.RED);
+				g.drawString(Integer.toString(healthUpgraded),game.getWidth()/2, 10);
+			//}
 			tempObject.render(g);
 		}
 	}

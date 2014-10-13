@@ -12,6 +12,7 @@ public class Button extends GameObject {
 	private int insufficientFunds = 0;
 	private boolean speedMaxed = false;
 	private boolean enemySpeedMaxed = false;
+	private boolean healthMaxed = false;
 
 	public Button(int x, int y, String label, Handler handler, Game game, ID id) {
 		super(x, y, label, handler, game, id);
@@ -55,14 +56,30 @@ public class Button extends GameObject {
 						g.drawString("You've pooped on the enemies speed!", 350, 400);
 					}
 				}
-				
-				switch(insufficientFunds){
-				case 1: g.drawString("You need 2000 for that!", 320,400);
-				break;
-				case 2: g.drawString("You need 8000 for that!", 320,400);
-				break;
-				
+				if (tempObject.getId() == ID.HealthUpgradeButton) {
+					g.setColor(Color.red);
+					g.fillRect(x, y, 100, 20);
+					g.setColor(Color.cyan);
+					g.drawString(label, x + 30, y + 10);
+					if (healthMaxed) {
+						g.drawString("You've maxed your health!", 350, 420);
+					}
 				}
+
+				switch (insufficientFunds) {
+				case 1:
+					g.drawString("You need 2000 for that!", 320, 400);
+					break;
+				case 2:
+					g.drawString("You need 8000 for that!", 320, 400);
+					break;
+				case 3:
+					g.drawString("You need 500 for that!", 320, 400);
+					break;
+				}
+//				if(handler.healthUpgraded > 1){
+//					g.drawString(Integer.toString(handler.healthUpgraded),game.getWidth() - 100,10);
+//				}
 
 			}
 
@@ -124,7 +141,7 @@ public class Button extends GameObject {
 							// ///
 							handler.addObject(new Button(80, 150, "+Speed!", handler, game, ID.SpeedUpgradeButton));
 							handler.addObject(new Button(80, 180, "-EnemySpeed!", handler, game, ID.EnemySpeedDowngradeButton));
-
+							handler.addObject(new Button(80, 210, "+HP!", handler, game, ID.HealthUpgradeButton));
 							// ///
 							handler.addObject(new Button(10, 10, "Exit", handler, game, ID.ExitButton));
 							gamestate = 3;
@@ -231,6 +248,40 @@ public class Button extends GameObject {
 							} else {
 								if (tempObject.getBounds().contains(handler.getClickLocation())) {
 									enemySpeedMaxed = true;
+								}
+							}
+						}
+				}
+
+				if (tempObject.getId() == ID.HealthUpgradeButton) {
+
+					// The price of a speed downgrade
+					price = 500;
+
+					if (handler.getClickLocation() != null)
+						if (tempObject.getBounds().contains(handler.getClickLocation())) {
+							if (handler.healthUpgraded <= 180) {
+								if (game.getScore() > price) {
+									System.out.println(handler.healthUpgraded);
+									handler.setClickLocation(100000, 0);
+									System.out.println("Upgraded your health!");
+									game.setScore(game.getScore() - price);
+
+									handler.healthUpgraded += 60;
+
+									// If you dont have enough money it tells
+									// the player
+								} else {
+									if (tempObject.getBounds().contains(handler.getClickLocation())) {
+										insufficientFunds = 3;
+									}
+								}
+
+								// If you've maxed the speed it displays a
+								// string to tell the player
+							} else {
+								if (tempObject.getBounds().contains(handler.getClickLocation())) {
+									healthMaxed = true;
 								}
 							}
 						}
